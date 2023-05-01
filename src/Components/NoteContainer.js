@@ -1,31 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Note from "./Note";
-
-const data = [
-    {
-        id: 1,
-        content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    },
-    {
-        id: 2,
-        content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    },
-    {
-        id: 3,
-        content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    },
-    {
-        id: 4,
-        content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    },
-];
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const NoteContainer = () => {
+    const [data, setData] = useState([]);
+    const getNotesData = async () => {
+        let noteData = await AsyncStorage.getItem("notes");
+        if (noteData !== null) {
+            setData(JSON.parse(noteData));
+        }
+    };
+    useEffect(() => {
+        getNotesData();
+    }, []);
     return (
         <ScrollView
             style={styles.container}
@@ -34,7 +22,7 @@ const NoteContainer = () => {
             {data.length > 0 ? (
                 <View style={styles.noteContainer}>
                     {data.map((item, index) => (
-                        <Note content={item.content} key={index} />
+                        <Note content={item} key={index} index={index} />
                     ))}
                 </View>
             ) : (

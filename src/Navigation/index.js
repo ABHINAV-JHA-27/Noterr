@@ -3,9 +3,10 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import AddNoteScreen from "../Screens/AddNoteScreen";
+import AddEditNoteScreen from "../Screens/AddEditNoteScreen";
 import HomeScreen from "../Screens/HomeScreen";
 import SplashScreen from "../Screens/SplashScreen";
+import ViewNoteScreen from "../Screens/ViewNoteScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,12 @@ const index = () => {
                 />
                 <Stack.Screen
                     name="AddNote"
-                    component={AddNoteScreen}
+                    component={AddEditNoteScreen}
+                    options={horizontalAnimation}
+                />
+                <Stack.Screen
+                    name="ViewNote"
+                    component={ViewNoteScreen}
                     options={horizontalAnimation}
                 />
             </Stack.Navigator>

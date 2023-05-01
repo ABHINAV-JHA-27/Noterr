@@ -1,17 +1,28 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+    Dimensions,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
+} from "react-native";
+import HTMLView from "react-native-htmlview";
+import { useNavigation } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
-const Note = ({ content }) => {
+const Note = ({ content, index }) => {
+    const navigation = useNavigation();
     return (
         <TouchableOpacity
             style={styles.container}
             onPress={() => {
-                console.log(content);
+                navigation.navigate("ViewNote", { index: index });
             }}
         >
-            <Text style={styles.contentStyle}>{content}</Text>
+            <View style={styles.contentStyle}>
+                <HTMLView value={content} />
+            </View>
         </TouchableOpacity>
     );
 };

@@ -5,6 +5,7 @@ import {
     SafeAreaView,
     StyleSheet,
     Text,
+    ToastAndroid,
     TouchableOpacity,
     View,
 } from "react-native";
@@ -14,31 +15,52 @@ import {
     RichToolbar,
 } from "react-native-pell-rich-editor";
 import { Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function AddNoteScreen({ navigation }) {
+export default function AddEditNoteScreen({ navigation, route }) {
+    const { noteData, index } = route.params;
     const richText = useRef();
 
-    const [descHTML, setDescHTML] = useState("");
+    const [note, setNote] = useState(noteData ? noteData : "");
     const [showDescError, setShowDescError] = useState(false);
+
+    const addNote = async () => {
+        const existingNotes = await AsyncStorage.getItem("notes");
+        let notes = [];
+        if (existingNotes !== null) {
+            notes = JSON.parse(existingNotes);
+        }
+        if (index !== null) {
+            notes[index] = note;
+            ToastAndroid.show("Note Edited Successfully!", ToastAndroid.SHORT);
+            await AsyncStorage.setItem("notes", JSON.stringify(notes));
+            navigation.replace("Home");
+        } else {
+            notes.push(note);
+            ToastAndroid.show("Note Created Successfully!", ToastAndroid.SHORT);
+            await AsyncStorage.setItem("notes", JSON.stringify(notes));
+            navigation.goBack();
+        }
+    };
 
     const richTextHandle = (descriptionText) => {
         if (descriptionText) {
             setShowDescError(false);
-            setDescHTML(descriptionText);
+            setNote(descriptionText);
         } else {
             setShowDescError(true);
-            setDescHTML("");
+            setNote("");
         }
     };
 
     const submitContentHandle = () => {
-        const replaceHTML = descHTML.replace(/<(.|\n)*?>/g, "").trim();
+        const replaceHTML = note.replace(/<(.|\n)*?>/g, "").trim();
         const replaceWhiteSpace = replaceHTML.replace(/&nbsp;/g, "").trim();
 
         if (replaceWhiteSpace.length <= 0) {
             setShowDescError(true);
         } else {
-            // send data to your server!
+            addNote();
         }
     };
 
@@ -71,19 +93,20 @@ export default function AddNoteScreen({ navigation }) {
             <View style={styles.richTextContainer}>
                 <RichEditor
                     ref={richText}
+                    initialContentHTML={noteData ? noteData : ""}
                     onChange={richTextHandle}
-                    placeholder="Write your cool content here :)"
+                    placeholder={"Start Writing Here..."}
                     androidHardwareAccelerationDisabled={true}
                     style={styles.richTextEditorStyle}
                     initialHeight={Dimensions.get("window").height * 0.7}
                 />
             </View>
 
-            {showDescError && (
-                <Text style={styles.errorTextStyle}>
-                    Your content shouldn't be empty 🤔
-                </Text>
-            )}
+            {showDescError &&
+                ToastAndroid.show(
+                    "Cannot Save a Empty Note",
+                    ToastAndroid.SHORT
+                )}
 
             <TouchableOpacity
                 style={styles.saveButtonStyle}

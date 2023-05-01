@@ -9,7 +9,14 @@ const HomeScreen = ({ navigation }) => {
         <View style={{ flex: 1 }}>
             <AppTitle />
             <NoteContainer />
-            <AddButton onPress={() => navigation.navigate("AddNote")} />
+            <AddButton
+                onPress={() =>
+                    navigation.navigate("AddNote", {
+                        noteData: null,
+                        index: null,
+                    })
+                }
+            />
         </View>
     );
 };
