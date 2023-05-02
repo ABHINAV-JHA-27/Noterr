@@ -1,8 +1,8 @@
+import { Entypo } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRef, useState } from "react";
 import {
     Dimensions,
-    Pressable,
-    SafeAreaView,
     StyleSheet,
     Text,
     ToastAndroid,
@@ -10,12 +10,10 @@ import {
     View,
 } from "react-native";
 import {
-    actions,
     RichEditor,
     RichToolbar,
+    actions,
 } from "react-native-pell-rich-editor";
-import { Entypo } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AddEditNoteScreen({ navigation, route }) {
     const { noteData, index } = route.params;

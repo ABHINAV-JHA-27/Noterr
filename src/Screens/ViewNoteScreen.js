@@ -1,17 +1,8 @@
-import {
-    StyleSheet,
-    Text,
-    ToastAndroid,
-    TouchableOpacity,
-    View,
-} from "react-native";
-import React, { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { AntDesign, Entypo, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, ToastAndroid, TouchableOpacity, View } from "react-native";
 import HTMLView from "react-native-htmlview";
-import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 
 const ViewNoteScreen = ({ route, navigation }) => {
     const [noteData, setNoteData] = useState("");

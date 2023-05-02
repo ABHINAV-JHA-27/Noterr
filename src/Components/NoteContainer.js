@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
-import Note from "./Note";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import React, { useState } from "react";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
+import Note from "./Note";
 
 const NoteContainer = () => {
     const [data, setData] = useState([]);

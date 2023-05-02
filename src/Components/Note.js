@@ -1,13 +1,7 @@
-import React from "react";
-import {
-    Dimensions,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-} from "react-native";
-import HTMLView from "react-native-htmlview";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Dimensions, StyleSheet, TouchableOpacity, View } from "react-native";
+import HTMLView from "react-native-htmlview";
 
 const { width, height } = Dimensions.get("window");
 
