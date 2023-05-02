@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     textContainer: {
         flex: 1,
         padding: 10,
+        paddingHorizontal: 20,
     },
     icon: {
         backgroundColor: "#fff",

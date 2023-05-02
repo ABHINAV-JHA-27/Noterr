@@ -24,7 +24,7 @@ export default function AddEditNoteScreen({ navigation, route }) {
     const [note, setNote] = useState(noteData ? noteData : "");
     const [showDescError, setShowDescError] = useState(false);
 
-    const addNote = async () => {
+    const addEditNote = async () => {
         const existingNotes = await AsyncStorage.getItem("notes");
         let notes = [];
         if (existingNotes !== null) {
@@ -60,7 +60,7 @@ export default function AddEditNoteScreen({ navigation, route }) {
         if (replaceWhiteSpace.length <= 0) {
             setShowDescError(true);
         } else {
-            addNote();
+            addEditNote();
         }
     };
 
@@ -68,11 +68,9 @@ export default function AddEditNoteScreen({ navigation, route }) {
         <View style={styles.container}>
             <RichToolbar
                 editor={richText}
-                selectedIconTint="#873c1e"
                 iconTint="#312921"
                 actions={[
                     "customAction",
-                    actions.insertImage,
                     actions.setBold,
                     actions.setItalic,
                     actions.setUnderline,
@@ -82,6 +80,15 @@ export default function AddEditNoteScreen({ navigation, route }) {
                     actions.setStrikethrough,
                 ]}
                 unselectedButtonStyle={styles.iconStyle}
+                selectedButtonStyle={[
+                    styles.iconStyle,
+                    {
+                        backgroundColor: "#000",
+                        borderWidth: 1,
+                        borderColor: "#fff",
+                    },
+                ]}
+                selectedIconTintColor="#fff"
                 iconMap={{
                     customAction: ({ tintColor }) => (
                         <Entypo name="cross" size={24} color={tintColor} />
@@ -98,7 +105,7 @@ export default function AddEditNoteScreen({ navigation, route }) {
                     placeholder={"Start Writing Here..."}
                     androidHardwareAccelerationDisabled={true}
                     style={styles.richTextEditorStyle}
-                    initialHeight={Dimensions.get("window").height * 0.7}
+                    initialHeight={Dimensions.get("window").height * 0.75}
                 />
             </View>
 
@@ -130,12 +137,14 @@ const styles = StyleSheet.create({
     },
 
     richTextEditorStyle: {
-        borderRadius: 20,
+        borderRadius: 23,
         width: "100%",
         padding: 10,
         alignSelf: "center",
+        borderWidth: 1,
+        borderColor: "gray",
         backgroundColor: "#fff",
-        shadowColor: "#000",
+        shadowColor: "gray",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -151,21 +160,17 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
     },
 
-    errorTextStyle: {
-        color: "#FF0000",
-        marginBottom: 10,
-        alignSelf: "center",
-    },
-
     saveButtonStyle: {
         backgroundColor: "#fff",
-        borderRadius: 10,
-        padding: 10,
-        width: "25%",
+        borderRadius: 13,
+        padding: 12,
+        width: "30%",
+        borderWidth: 1,
+        borderColor: "gray",
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "center",
-        shadowColor: "#000",
+        shadowColor: "gray",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -187,7 +192,9 @@ const styles = StyleSheet.create({
         height: 50,
         margin: 5,
         borderRadius: 30,
-        shadowColor: "#000",
+        borderWidth: 1,
+        borderColor: "gray",
+        shadowColor: "gray",
         shadowOffset: {
             width: 0,
             height: 2,

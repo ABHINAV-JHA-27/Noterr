@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View } from "react-native";
 import Note from "./Note";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 const NoteContainer = () => {
     const [data, setData] = useState([]);
@@ -11,9 +12,9 @@ const NoteContainer = () => {
             setData(JSON.parse(noteData));
         }
     };
-    useEffect(() => {
+    useFocusEffect(() => {
         getNotesData();
-    }, []);
+    });
     return (
         <ScrollView
             style={styles.container}
@@ -47,7 +48,8 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
     },
     noNotes: {
-        flex: 1,
+        height: Dimensions.get("window").height * 0.85,
+        width: Dimensions.get("window").width,
         justifyContent: "center",
         alignItems: "center",
     },
