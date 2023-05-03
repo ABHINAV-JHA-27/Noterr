@@ -14,6 +14,7 @@ import {
     RichToolbar,
     actions,
 } from "react-native-pell-rich-editor";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function AddEditNoteScreen({ navigation, route }) {
     const { noteData, index } = route.params;
@@ -21,6 +22,14 @@ export default function AddEditNoteScreen({ navigation, route }) {
 
     const [note, setNote] = useState(noteData ? noteData : "");
     const [showDescError, setShowDescError] = useState(false);
+
+    const addSubscript = () => {
+        richText.current?.sendCommand("subscript");
+    };
+
+    const addSuperscript = () => {
+        richText.current?.sendCommand("superscript");
+    };
 
     const addEditNote = async () => {
         const existingNotes = await AsyncStorage.getItem("notes");
@@ -68,13 +77,14 @@ export default function AddEditNoteScreen({ navigation, route }) {
                 editor={richText}
                 iconTint="#312921"
                 actions={[
-                    "customAction",
+                    "back",
                     actions.setBold,
                     actions.setItalic,
                     actions.setUnderline,
                     actions.insertBulletsList,
                     actions.insertOrderedList,
-                    actions.insertLink,
+                    "subscript",
+                    "superscript",
                     actions.setStrikethrough,
                 ]}
                 unselectedButtonStyle={styles.iconStyle}
@@ -88,11 +98,27 @@ export default function AddEditNoteScreen({ navigation, route }) {
                 ]}
                 selectedIconTintColor="#fff"
                 iconMap={{
-                    customAction: ({ tintColor }) => (
+                    back: ({ tintColor }) => (
                         <Entypo name="cross" size={24} color={tintColor} />
                     ),
+                    subscript: ({ tintColor }) => (
+                        <FontAwesome
+                            name="subscript"
+                            size={24}
+                            color={tintColor}
+                        />
+                    ),
+                    superscript: ({ tintColor }) => (
+                        <FontAwesome
+                            name="superscript"
+                            size={24}
+                            color={tintColor}
+                        />
+                    ),
                 }}
-                customAction={() => navigation.goBack()}
+                back={() => navigation.goBack()}
+                subscript={addSubscript}
+                superscript={addSuperscript}
                 style={styles.richTextToolbarStyle}
             />
             <View style={styles.richTextContainer}>
